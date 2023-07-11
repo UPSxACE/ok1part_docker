@@ -1,0 +1,7 @@
+{
+  "title_login": "Login",
+  "alert_wrong_credentials": "Wrong password or username.",
+  "alert_unexpected_error": "An unexpected error has occurred. Please reach us for support if the error persists.",
+  "link_register": "Create an account",
+  "link_forgot_password": "I forgot my password"
+}

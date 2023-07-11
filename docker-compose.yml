@@ -1,0 +1,82 @@
+version: '3.9'
+
+services:
+  nginx:
+    container_name: nginx
+    build:
+      context: ./ok1part_nginx
+      dockerfile: Dockerfile
+    ports:
+      - '80:80'
+      - '8080:8080'
+      - '4000:4000'
+    networks:
+      - mynetwork
+    depends_on:
+      - react_server_1
+      - react_server_2
+      - spring
+    restart: always
+  spring:
+    container_name: ok1part_spring
+    build:
+      context: ./ok1part_spring
+      dockerfile: Dockerfile
+    #ports:
+    #  - '8000:8000'
+    networks:
+      - mynetwork
+    restart: unless-stopped
+    depends_on:
+      - db_mariadb
+  react_server_1:
+    container_name: react_server_1
+    build:
+      context: ./ok1part_react1
+      dockerfile: Dockerfile
+    #ports:
+    #  - '8000:8000'
+    networks:
+      - mynetwork
+    restart: always
+  react_server_2:
+    container_name: react_server_2
+    build:
+      context: ./ok1part_react2
+      dockerfile: Dockerfile
+    #ports:
+    #  - '3000:3000'
+    networks:
+      - mynetwork
+    restart: always
+  db_mariadb:
+    container_name: db_mariadb
+    image: mariadb:latest
+    volumes:
+      - db_mariadb_data:/var/lib/mysql # We are creating a directory var/lib/mysql inside the volume "db_mariadb_data"
+    environment:
+      MARIADB_USER: edu #admin
+      MARIADB_PASSWORD: edu #Admin1029#
+      MARIADB_ROOT_PASSWORD: Root1029#
+    networks:
+      - mynetwork
+    restart: always
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db_mariadb # mysql database hostname
+      MYSQL_ROOT_PASSWORD: Root1029#
+    #ports:
+    #- 8080:80
+    networks:
+      - mynetwork
+    restart: always
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  db_mariadb_data:
+    driver: local

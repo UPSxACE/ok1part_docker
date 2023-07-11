@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/*
+a {
+  color: #0072e5;
+}
+*/
+
+a {
+  color: inherit;
+}
+
+html {
+  scroll-behavior: smooth;
+}
